@@ -3,6 +3,8 @@ const app = express();
 
 const port = 3000;
 app.use(express.json());
+app.use(middleware);
+app.use(logger);
 
 let courses = [
     { id: 1, name: 'javascript' },
@@ -53,6 +55,16 @@ app.delete('/courses/:id', (req, res) => {
 
     res.json(courses);
 });
+
+function middleware(req, res, next) {
+    console.log("called");
+    next();
+}
+
+function logger(req, res, next) {
+    console.log(req.method, req.ip, req.hostname, new Date());
+    next();
+}
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
