@@ -25,21 +25,33 @@ app.post('/courses', (req, res) => {
 });
 
 app.put('/courses', (req, res) => {
-    const courseName = req.body.name;
-    let course = courses.find(c => c.name === courseName);
+    const courseId = req.body.id;
+    let course = courses.find(c => c.id === courseId);
 
     if (course) {
+        course.name = "spring",
         res.json(courses);
     }
     else {
         let newCourse = {
-            id: courses.length + 1,
-            name: courseName
+            id: courseId,
+            name: "spring"
         };
 
         courses.push(newCourse);
         res.json(courses);
     }
+});
+
+app.delete('/courses/:id', (req, res) => {
+    const courseId = parseInt(req.params.id);
+    let courseIndex = courses.findIndex(c => c.id === courseId);
+
+    if (!(courseIndex == -1)) {
+        courses.splice(courseIndex, 1);
+    }
+
+    res.json(courses);
 });
 
 app.listen(port, () => {
