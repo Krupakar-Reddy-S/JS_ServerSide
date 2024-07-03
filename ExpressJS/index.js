@@ -62,7 +62,7 @@ function middleware(req, res, next) {
 }
 
 function logger(req, res, next) {
-    console.log(req.method, req.ip, req.hostname, new Date());
+    console.log(req.method, req.ip, req.hostname, req.url, new Date());
     next();
 }
 
