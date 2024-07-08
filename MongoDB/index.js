@@ -3,7 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 const app = express();
-const port = 8086;
+const port = 3000;
 
 app.use(express.json());
 
@@ -62,6 +62,27 @@ app.get('/api/products', async (req, res) => {
     const products = await productModel.find({});
 
     return res.status(200).json(products);
+});
+
+// get product by id
+app.get('/api/products/:id', async (req, res) => {
+    const product = await productModel.findById(req.params.id);
+
+    return res.status(200).json(product);
+});
+
+// update product by id
+app.put('/api/products/:id', async (req, res) => {
+    const updatedProduct = await productModel.findByIdAndUpdate(req.params.id, req.body);
+
+    return res.status(200).json(updatedProduct);
+});
+
+// delete product by id
+app.delete('/api/products/:id', async (req, res) => {
+    const deletedProduct = await productModel.findByIdAndDelete(req.params.id);
+
+    return res.status(200).json(deletedProduct);
 });
 
 app.listen(port, () => {
